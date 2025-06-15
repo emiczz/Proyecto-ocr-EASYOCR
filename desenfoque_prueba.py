@@ -13,16 +13,20 @@ reader = easyocr.Reader(['es'],gpu=False)
 resultado = reader.readtext(imagen)
 
 #4) Organizar retorno //////// (_ no le da importancia a ese valor)
-for coordenadas, texto, confianza in resultado:
-    cords_limpias = [[int(x), int(y)] for x,y in coordenadas]
-    print(f'Coordenadas: {cords_limpias} - Texto: "{texto}" - Confianza: {confianza:.2f}')
+for x in resultado:
+    
+    print(f' Texto: "{x}')
     #Creo los puntos de trackeo (cuadro delimitador que envuelve el texto)
-    punto_cero = cords_limpias[0][0]
-    punto_uno = coordenadas[0][1]
-    punto_dos = coordenadas[0][2]
-    punto_tres = coordenadas[0][3]
+    punto_cero = x[0][0]
+    punto_uno = x[0][1]
+    punto_dos = x[0][2]
+    punto_tres = x[0][3]
 
-    cv2.circle(imagen,punto_cero, 2, color=(255,0,0), thickness=2)
+    cv2.circle(imagen,punto_cero, radius=2, color=(255,0,0), thickness=2)
+    cv2.circle(imagen,punto_uno, radius=2, color=(0,255,0), thickness=2)
+    cv2.circle(imagen,punto_dos,radius=2, color=(0,0,255), thickness=2)
+    cv2.circle(imagen,punto_tres,radius=2,color=(0,255,255),thickness=2)
+
 
 
 
