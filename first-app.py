@@ -5,7 +5,7 @@ import os
 # ------------------------------------------
 # 1) Cargar imagen original
 # ------------------------------------------
-ruta_original = 'prueba-fotocopia.jpg'
+ruta_original = ''
 imagen = cv2.imread(ruta_original)
 if imagen is None:
     print(f"❌ No se pudo cargar la imagen.\n   Revisa la ruta: {os.path.abspath(ruta_original)}")
@@ -81,5 +81,6 @@ else:
     )
 
 cv2.imshow("Imagen Binarizada (Mejor)", binaria_final)
-cv2.waitKey(60000)
+cv2.waitKey()
 cv2.destroyAllWindows()
+
