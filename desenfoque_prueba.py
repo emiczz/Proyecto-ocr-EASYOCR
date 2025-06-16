@@ -1,9 +1,11 @@
 import cv2
 import easyocr
 import numpy as np
+from gtts import gTTS
+
 
 # 1) Cargar imagen original
-ruta_original = './pruebas/prueba-fotocopia.jpg'
+ruta_original = './pruebas/imagen_mercadona_prueba.jpg'
 imagen = cv2.imread(ruta_original)
 
 #2) Inicializo EASYOCR
@@ -12,10 +14,12 @@ reader = easyocr.Reader(['es'],gpu=False)
 #3) Leer texto
 resultado = reader.readtext(imagen)
 
+texto_total = ""
+
 #4) Organizar retorno //////// (_ no le da importancia a ese valor)
 for x in resultado:
     
-    print(f' Texto: "{x}')
+    print(f' Texto: "{x[1]} ---- Confianza {round(x[2], 2)}')
     #Creo los puntos de trackeo (cuadro delimitador que envuelve el texto)
     # Asegurarse de que sean tuplas de enteros
     punto_cero = tuple(map(int, x[0][0]))
@@ -33,8 +37,11 @@ for x in resultado:
     cv2.circle(imagen,punto_uno, radius=2, color=(0,255,0), thickness=2)
     cv2.circle(imagen,punto_dos,radius=2, color=(0,0,255), thickness=2)
     cv2.circle(imagen,punto_tres,radius=2,color=(0,255,255),thickness=2)
-
-
+    texto_total += x[1] + ". "
+    
+    
+tts = gTTS(texto_total,lang='es')
+tts.save("audio.mp3")
 
 
 
